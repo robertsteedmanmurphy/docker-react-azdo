@@ -65,4 +65,4 @@ stages:
         awsCredentials: 'aws_secriveConnection'
         regionName: 'eu-west-1'
         awsCommand: 's3'
-        subCommand: 'cp testFile.txt s3://elasticbeanstalk-eu-west-1-498738601876'
+        awsSubCommand: 'cp testFile.txt s3://elasticbeanstalk-eu-west-1-498738601876'
