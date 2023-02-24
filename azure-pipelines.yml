@@ -26,7 +26,6 @@ stages:
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        repository: 'steed/testazdo'
         tags: |
           $(tag)
 
