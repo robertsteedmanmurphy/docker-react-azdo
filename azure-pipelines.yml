@@ -36,3 +36,5 @@ stages:
         containerRegistry: 'steedman_dockerHub'
         repository: 'steed/testazdo'
         command: 'push'
+        tags: |
+          $(tag)
