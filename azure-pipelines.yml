@@ -1,7 +1,3 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
 - master
 
@@ -9,8 +5,7 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
-  ImageName: 'steed/testazdo:$(Build.BuildId)'  
+  tag: '$(Build.BuildId)' 
   
 stages:
 - stage: Build
@@ -30,17 +25,11 @@ stages:
         tags: |
           $(tag)
 
-    - task: Bash@3
-      displayName: "Count of docker images"
+    - task: Docker@2
+      displayName: Login to Docker Hub
       inputs:
-        targetType: 'inline'
-        script: docker images -q | wc -l
-
-    # - task: Docker@2
-    #   displayName: Login to Docker Hub
-    #   inputs:
-    #     command: login
-    #     containerRegistry: steedman_dockerHub
+        command: login
+        containerRegistry: steedman_dockerHub
 
     - task: Docker@2
       displayName: 'Push the Docker image to Dockerhub'
@@ -50,8 +39,8 @@ stages:
         tags: |
           $(tag)
 
-    # - task: Docker@2
-    #   displayName: Logout of ACR
-    #   inputs:
-    #     command: logout
-    #     containerRegistry: steedman_dockerHub
+    - task: Docker@2
+      displayName: Logout of ACR
+      inputs:
+        command: logout
+        containerRegistry: steedman_dockerHub
