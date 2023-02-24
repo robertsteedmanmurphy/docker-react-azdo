@@ -62,7 +62,7 @@ stages:
     - task: AWSCLI@1
       displayName: AddTempFileToS3
       inputs:
-        awsCredentials: 'aws1'
+        awsCredentials: 'aws4'
         regionName: 'eu-west-1'
         awsCommand: 's3'
         awsSubCommand: 'cp'
