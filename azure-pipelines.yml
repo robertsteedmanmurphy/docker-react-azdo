@@ -32,8 +32,8 @@ stages:
     - task: Docker@2
       displayName: 'Push the Docker image to Dockerhub'
       inputs:
-        containerRegistry: 'steedman_dockerHub'
-        repository: 'steed/testazdo'
+        # containerRegistry: 'steedman_dockerHub'
+        repository: 'steedman/testazdo'
         command: 'push'
         tags: |
           $(tag)
