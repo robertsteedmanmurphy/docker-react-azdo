@@ -8,39 +8,60 @@ variables:
   tag: 'TestV2' 
   
 stages:
-- stage: Build
-  displayName: Build image
+# - stage: Build
+#   displayName: Build image
+#   jobs:
+#   - job: Build
+#     displayName: Build
+#     pool:
+#       vmImage: ubuntu-latest
+#     steps:       
+#     - task: Docker@2
+#       displayName: Build an image
+#       inputs:
+#         command: build
+#         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+#         repository: 'steedman/testazdo'
+#         tags: |
+#           $(tag)
+
+#     - task: Docker@2
+#       displayName: Login to Docker Hub
+#       inputs:
+#         command: login
+#         containerRegistry: steedman_dockerHub
+
+#     - task: Docker@2
+#       displayName: 'Push the Docker image to Dockerhub'
+#       inputs:
+#         repository: 'steedman/testazdo'
+#         command: 'push'
+#         tags: |
+#           $(tag)
+
+#     - task: Docker@2
+#       displayName: Logout of ACR
+#       inputs:
+#         command: logout
+#         containerRegistry: steedman_dockerHub
+
+- stage: Deploy
+  displayName: Deploy to AWS beanstalk
   jobs:
   - job: Build
     displayName: Build
     pool:
       vmImage: ubuntu-latest
     steps:       
-    - task: Docker@2
-      displayName: Build an image
+    - task: Bash@3
+      displayName: TempFile
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        repository: 'steedman/testazdo'
-        tags: |
-          $(tag)
+        targetType: 'inline'
+        script: echo "hi there" > testFile.txt
 
-    - task: Docker@2
-      displayName: Login to Docker Hub
+    - task: AWSCLI@1
+      displayName: AddTempFileToS3
       inputs:
-        command: login
-        containerRegistry: steedman_dockerHub
-
-    - task: Docker@2
-      displayName: 'Push the Docker image to Dockerhub'
-      inputs:
-        repository: 'steedman/testazdo'
-        command: 'push'
-        tags: |
-          $(tag)
-
-    - task: Docker@2
-      displayName: Logout of ACR
-      inputs:
-        command: logout
-        containerRegistry: steedman_dockerHub
+        awsCredentials: 'aws_secriveConnection'
+        regionName: 'eu-west-1'
+        awsCommand: 'aws s3 cp testFile.txt s3://elasticbeanstalk-eu-west-1-498738601876'

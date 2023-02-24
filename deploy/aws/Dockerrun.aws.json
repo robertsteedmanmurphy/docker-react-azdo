@@ -1,11 +1,11 @@
 {
     "AWSEBDockerrunVersion": "1",
     "Image": {
-      "Name": "steedman/testazdo"
+      "Name": "steedman/testazdo:TestV1"
     },
     "Ports": [
       {
-        "ContainerPort": "8080"
+        "ContainerPort": "80"
       }
     ]
   }
