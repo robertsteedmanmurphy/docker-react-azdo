@@ -51,7 +51,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      vmImage: ubuntu-latest
+      vmImage: windows-latest
     steps:       
     - task: Bash@3
       displayName: TempFile
