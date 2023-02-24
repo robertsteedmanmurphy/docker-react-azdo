@@ -37,8 +37,8 @@ stages:
       displayName: "Count of docker images"
       inputs:
         targetType: 'inline'
-        script: docker ps -q | wc -l
-
+        script: docker images -q | wc -l
+        
     - task: Docker@2
       displayName: Build an image
       inputs:
