@@ -5,7 +5,7 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)' 
+  tag: 'TestV1' 
   
 stages:
 - stage: Build
@@ -14,7 +14,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      vmImage: ubuntu-latest
+      vmImage: ubuntu-latesth
     steps:       
     - task: Docker@2
       displayName: Build an image
