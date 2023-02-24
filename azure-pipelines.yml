@@ -29,11 +29,9 @@ stages:
         tags: |
           $(tag)
 
-    - task: Docker@2      
-      inputs:
-        containerregistrytype: 'Container Registry'
-        dockerRegistryEndpoint: 'Docker Hub'
-        command: 'Push an image'
-        imageName: '$(ImageName)'
-      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    - task: Docker@2
       displayName: 'Push the Docker image to Dockerhub'
+      inputs:
+        containerRegistry: 'steedman_dockerHub'
+        repository: 'steed/testazdo'
+        command: 'push'
