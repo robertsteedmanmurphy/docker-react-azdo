@@ -10,7 +10,8 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
-
+  ImageName: 'steed/testazdo:$(Build.BuildId)'  
+  
 stages:
 - stage: Build
   displayName: Build image
@@ -27,3 +28,12 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
+
+    - task: Docker@2      
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Docker Hub'
+        command: 'Push an image'
+        imageName: '$(ImageName)'
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+      displayName: 'Push the Docker image to Dockerhub'
