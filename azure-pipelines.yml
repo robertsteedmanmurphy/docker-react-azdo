@@ -5,7 +5,7 @@ resources:
 - repo: self
 
 variables:
-  tag: 'TestV1' 
+  tag: 'TestV2' 
   
 stages:
 - stage: Build
